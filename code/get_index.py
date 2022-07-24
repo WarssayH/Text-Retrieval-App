@@ -1,6 +1,3 @@
-# Author: Warssay Habte
-# Student ID: 180540830
-
 import os
 from tkinter import filedialog
 from tkinter import *
@@ -24,11 +21,9 @@ def get_folder():
     """
     root = Tk()
     root.withdraw()
-    # start your code here
     # using the method in fieldialog to get the directory path
     # complete the next line
     folder_path = filedialog.askdirectory()
-    # end your code here
     return folder_path
 
 
@@ -41,12 +36,10 @@ def get_docDict(path):
         with open(full_path, 'r', errors='ignore') as f:
             data = f.readlines()
         text = "".join([i for i in data])
-        # start your code here
         # remove all the "\n" from the text by regex, the re.sub() method
         # uncomment next line and finish the code
         text = re.sub(r'\n', '', text)
         doc_dict[file] = text
-        # end your code here
     return doc_dict
 
 
@@ -56,7 +49,6 @@ def clean_text(doc_dict):
     stopwords_english = stopwords.words('english')
 
     for name, doc in doc_dict.items():
-        # start your code here
         # uncomment next line and remove extra white space
         text = re.sub(r"\s+", " ", doc)
         # uncomment next line and remove extra ...
@@ -69,16 +61,13 @@ def clean_text(doc_dict):
         # uncomment next line and tokenize the text string
         text_tokens = word_tokenize(text)
         text_clean = []
-        # end your code here
 
         for word in text_tokens:
-            # start your code here
             # stem the tokens
             if (word not in stopwords_english and word not in string.punctuation):
                 stem_word = stemmer.stem(word)
                 text_clean.append(word)
         clean_dict[name] = text_clean
-
     return clean_dict
 
 
@@ -96,7 +85,6 @@ def corpus_tokenize(doc_dict):
 
 
 def build_ranker():
-    # start your code here
     # get the folder path of the document collection
     folder_path = get_folder()
     # get the document dict

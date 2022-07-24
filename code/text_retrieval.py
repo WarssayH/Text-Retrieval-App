@@ -1,16 +1,10 @@
-# Author: Warssay Habte
-# Student ID: 180540830
-
 import tkinter
 from tkinter import *
 from tkinter.ttk import *
 import numpy as np
-# Start your code here
 # import the other two python script here
 from search import *
 import get_index
-# End your code here
-
 
 class Application(Frame):
     def __init__(self, master=None):
@@ -29,7 +23,6 @@ class Application(Frame):
         self.scrollbar = Scrollbar(self.master, orient="vertical")
 
         # set the GUI (grid) locations
-
         self.l1.grid(row=0, column=1, sticky=W)
         self.l2.grid(row=1, column=0)
 
@@ -53,67 +46,51 @@ class Application(Frame):
         self.index = tkinter.ttk.Button(self.master, text="Index", style="D.TButton")
         self.index.grid(row=5, column=0, sticky=W)
 
-        # start your code here
         # set the click command of the "Index" button to the index_document function
         # the click event is defined by key_name["command"] = function_name
         # don't add a () to trigger the function here
         # since we addi everything in an OOP object, remember to use self.object or self.function_name
         self.index["command"] = self.index_document
-        # end your code here
 
         # button to rank the documents given the query
         self.search = Button(self.master, text="Search", style="D.TButton")
         self.search.grid(row=1, column=3, sticky=W)
 
-        # start your code here
         # set the click command of the "Search" button to the get_query function
         self.search["command"] = self.get_query
-        # end your code here
 
         self.quit = Button(self.master, text="Quit", style="D.TButton", command=self.master.destroy)
         self.quit.grid(row=5, column=2, sticky=E)
 
     def get_query(self):
-        # start your code here
         # get the query string from the query text box
         # uncomment next line and finish the code
         query = self.query_text.get()
-        # end your code here
 
         if self.ranker is None:
             self.result.insert(END, "Please index the documnents first. \n")
             return
-        # start your code here
         # use the query_process function from the search.py script to get the tokenized_query
         # uncomment the next line and finish the code
         tokenized_query = query_process(query)
-        # end your code here
         self.result.insert(END, "\n" + "The query tokens: ")
 
-        # start your code here
         # insert the tokenized query terms to the "result" text field
         # uncomment the next line and finished the code
         self.result.insert(END, tokenized_query)
-        # end your code here
         self.result.insert(END, "\n")
 
-        # start your code here
         # get the documents ranking scores by the get_scores method of the ranker object
         # the input of the get_scores function is the tokenized query terms
         doc_ranks = self.ranker.get_scores(tokenized_query)
-        # end your code here
 
-        # start your code here
         # get the ranking results as a string by calling the show_ranking function
         rank_list = self.show_ranking(doc_ranks, self.doc_dict)
-        # end your code here
 
-        # start your code here
         # get the formatted ranked top 5 documents and their score by calling the print_top5 function
         top5 = self.print_top5(rank_list)
         # insert the result formatted string to the result text field
         self.result.insert(END, top5)
-        # end your code here
 
         self.result.insert(END, "\n")
 
@@ -124,7 +101,6 @@ class Application(Frame):
         :return:
         it will set the ranker and the doc_doc_dict properties of the object
         """
-        # start your code here
         # call the build_ranker function from the get_index script
         # and return the BM25 ranker and the document dict
         # uncomment the next line and finish the code
@@ -134,8 +110,6 @@ class Application(Frame):
         self.ranker = bm25_ranker
         self.doc_dict = document_dict
 
-        # end your code here
-
 
     def show_ranking(self, doc_scores, doc_dict):
         """
@@ -144,10 +118,8 @@ class Application(Frame):
         :return: a list of tuples, in a tuple (file_name, file_ranking_score}
         """
         doc_idx_dict = {}
-        # start your code here
         # use the argsort method from numpy to sort the score array ascendingly
         # to reverse the order to descending, use the [::-1] method to numpy array
-        # uncomment the next line and finish your code
         sorted_idx = np.argsort(doc_scores)[::-1]
         
 
@@ -161,14 +133,11 @@ class Application(Frame):
         # the doc_score can get from the doc_scores by the corresponding index
         for i in range(0, 5):
             ranking.append((doc_idx_dict[sorted_idx[i]], doc_scores[sorted_idx[i]]))
-
-        # end your code here
         return ranking
 
     def print_top5(self, ranking):
         results = ""
         for i in range(5):
-            # start your code here
             # reformat the string by the string "  ".format() method
             # uncomment next line and finish the code
             print_out = "{}: {}".format(ranking[i][0], ranking[i][1])

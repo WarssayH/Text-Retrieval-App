@@ -1,6 +1,3 @@
-# Author: Warssay Habte
-# Student ID: 180540830
-
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
@@ -9,9 +6,7 @@ import re
 
 
 def query_process(query):
-    # start your code here
     query = query.lower()
-    # remove the extra white space
     query = query.strip()
 
     stopwords_english = stopwords.words('english')
